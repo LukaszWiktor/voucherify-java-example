@@ -1,7 +1,7 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.math.BigDecimal;
 
 import pl.rspective.voucherify.client.VoucherifyClient;
+import pl.rspective.voucherify.client.VoucherifyUtils;
 import pl.rspective.voucherify.client.model.Customer;
 import pl.rspective.voucherify.client.model.VoucherRedemptionContext;
 import pl.rspective.voucherify.client.model.VoucherRedemptionResult;
@@ -25,8 +25,10 @@ public class VoucherifyExampleApp {
                           .addMetadata("favouriteBrands", new String[]{"Armani", "L'Autre Chose", "Vicini"})
                           .build()));
             
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            System.out.println(gson.toJson(result));
+            BigDecimal initialPrice = new BigDecimal("29.99");
+            BigDecimal priceAfterDiscount = VoucherifyUtils.calculatePrice(initialPrice, result.getVoucher(), null);
+            System.out.println("Initial price:       " + initialPrice);
+            System.out.println("Price after discout: " + priceAfterDiscount);
         } catch (Exception e) {
             e.printStackTrace();
         }
